@@ -1,7 +1,7 @@
-// Função para adicionar itens ao carrinho
-let cart = [];
+// Função para carregar o carrinho do localStorage
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Função para atualizar o número de itens no carrinho
+// Função para atualizar a quantidade de itens no carrinho no cabeçalho
 function updateCartDisplay() {
   const cartLink = document.querySelector('a[href="cart.html"]');
   cartLink.textContent = `Carrinho (${cart.length})`;
@@ -10,27 +10,26 @@ function updateCartDisplay() {
 // Adiciona um produto ao carrinho
 document.querySelectorAll('.add-to-cart').forEach(button => {
   button.addEventListener('click', function() {
-    const product = this.getAttribute('data-product');
-    const price = parseFloat(this.getAttribute('data-price'));
+    const productName = this.getAttribute('data-product');
+    const productPrice = parseFloat(this.getAttribute('data-price'));
 
     // Verifica se o produto já está no carrinho
-    const existingProduct = cart.find(item => item.product === product);
+    const existingProduct = cart.find(item => item.product === productName);
     if (existingProduct) {
       existingProduct.quantity += 1;  // Aumenta a quantidade do produto
     } else {
-      cart.push({ product, price, quantity: 1 });
+      cart.push({ product: productName, price: productPrice, quantity: 1 });
     }
 
-    localStorage.setItem('cart', JSON.stringify(cart));  // Armazenando no LocalStorage
-    updateCartDisplay();  // Atualiza o carrinho na interface
+    // Salva o carrinho no localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Atualiza a exibição do carrinho
+    updateCartDisplay();
   });
 });
 
-// Carrega o carrinho da sessão ao carregar a página
+// Carrega o carrinho ao carregar a página
 window.addEventListener('load', function() {
-  const savedCart = JSON.parse(localStorage.getItem('cart'));
-  if (savedCart) {
-    cart = savedCart;
-    updateCartDisplay();
-  }
+  updateCartDisplay();
 });

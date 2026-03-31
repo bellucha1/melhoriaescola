@@ -1,6 +1,7 @@
 // Função para adicionar itens ao carrinho
 let cart = [];
 
+// Função para atualizar o número de itens no carrinho
 function updateCartDisplay() {
   const cartLink = document.querySelector('a[href="cart.html"]');
   cartLink.textContent = `Carrinho (${cart.length})`;
@@ -12,9 +13,16 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     const product = this.getAttribute('data-product');
     const price = parseFloat(this.getAttribute('data-price'));
 
-    cart.push({ product, price });
+    // Verifica se o produto já está no carrinho
+    const existingProduct = cart.find(item => item.product === product);
+    if (existingProduct) {
+      existingProduct.quantity += 1;  // Aumenta a quantidade do produto
+    } else {
+      cart.push({ product, price, quantity: 1 });
+    }
+
     localStorage.setItem('cart', JSON.stringify(cart));  // Armazenando no LocalStorage
-    updateCartDisplay();
+    updateCartDisplay();  // Atualiza o carrinho na interface
   });
 });
 

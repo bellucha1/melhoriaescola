@@ -25,24 +25,35 @@
   <section class="banner">
     <h2>Detetores de Circuito para Eletrodomésticos</h2>
     <p>Encontre os melhores produtos para testar seus aparelhos!</p>
-    <a href="products.html" class="cta-button">Compre Agora</a>
+    <a href="#products" class="cta-button">Compre Agora</a>
   </section>
 
-  <section class="product-list">
+  <section class="search-filter">
+    <input type="text" id="search" placeholder="Buscar produto...">
+    <select id="filter">
+      <option value="all">Todos</option>
+      <option value="199.99">Até R$199,99</option>
+      <option value="250.00">Até R$250,00</option>
+    </select>
+  </section>
+
+  <section class="product-list" id="products">
     <h2>Produtos em Destaque</h2>
-    <div class="product-card">
-      <img src="detector1.jpg" alt="Detector 1">
-      <h3>Detector de Circuito 1</h3>
-      <p>R$ 199,99</p>
-      <button class="add-to-cart" data-product="Detector de Circuito 1" data-price="199.99">Adicionar ao Carrinho</button>
-    </div>
-    <div class="product-card">
-      <img src="detector2.jpg" alt="Detector 2">
-      <h3>Detector de Circuito 2</h3>
-      <p>R$ 249,99</p>
-      <button class="add-to-cart" data-product="Detector de Circuito 2" data-price="249.99">Adicionar ao Carrinho</button>
+    <div class="products-container">
+      <!-- Produtos gerados dinamicamente -->
     </div>
   </section>
+
+  <!-- Modal de Produto -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="modal-title"></h3>
+      <img id="modal-img" src="" alt="">
+      <p id="modal-price"></p>
+      <button id="modal-add-to-cart">Adicionar ao Carrinho</button>
+    </div>
+  </div>
 
   <footer>
     <p>&copy; 2026 CircuitoSeguro. Todos os direitos reservados.</p>

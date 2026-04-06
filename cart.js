@@ -1,10 +1,12 @@
-// Recupera o carrinho do localStorage
+// Recupera o carrinho do localStorage ou cria vazio
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+// Elementos do DOM
 const cartContainer = document.getElementById('cart-items');
 const totalValueEl = document.getElementById('total-value');
+const checkoutBtn = document.getElementById('checkout-button');
 
-// Função para exibir itens do carrinho
+// Função para exibir o carrinho
 function displayCart() {
   cartContainer.innerHTML = '';
 
@@ -21,7 +23,7 @@ function displayCart() {
       <p><strong>${item.product}</strong></p>
       <p>Preço: R$ ${item.price.toFixed(2)}</p>
       <p>
-        Quantidade: 
+        Quantidade:
         <button class="decrease" data-index="${index}">-</button>
         ${item.quantity || 1}
         <button class="increase" data-index="${index}">+</button>
@@ -42,7 +44,7 @@ function updateTotal() {
   totalValueEl.textContent = total.toFixed(2);
 }
 
-// Eventos para aumentar, diminuir ou remover
+// Adiciona eventos de aumentar, diminuir e remover
 function attachCartEvents() {
   const increaseBtns = document.querySelectorAll('.increase');
   const decreaseBtns = document.querySelectorAll('.decrease');
@@ -87,8 +89,8 @@ function saveCart() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Finalizar compra
-document.getElementById('checkout-button').addEventListener('click', () => {
+// Botão de finalizar compra
+checkoutBtn.addEventListener('click', () => {
   if (cart.length === 0) {
     alert("Seu carrinho está vazio!");
     return;
@@ -99,5 +101,5 @@ document.getElementById('checkout-button').addEventListener('click', () => {
   displayCart();
 });
 
-// Inicializa o carrinho
+// Inicializa o carrinho na tela
 displayCart();

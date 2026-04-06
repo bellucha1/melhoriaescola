@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carrinho de Compras</title>
+  <title>Carrinho de Compras - CircuitoSeguro</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
   <!-- HEADER -->
   <header>
     <div class="logo">
-      <h1>Loja de Detectores de Circuito</h1>
+      <h1>CircuitoSeguro</h1>
     </div>
     <nav>
       <ul>
@@ -22,13 +22,13 @@
   </header>
 
   <!-- CARRINHO -->
-  <section class="cart">
+  <section class="cart-section">
     <h2>Seu Carrinho</h2>
-    <div class="cart-container" id="cart-items">
+    <div id="cart-items" class="cart-container">
       <!-- Itens do carrinho serão gerados dinamicamente -->
     </div>
 
-    <div id="total">
+    <div class="cart-total">
       <h3>Total: R$ <span id="total-value">0.00</span></h3>
     </div>
 
@@ -38,11 +38,10 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Loja de Detectores de Circuito. Todos os direitos reservados.</p>
+    <p>&copy; 2026 CircuitoSeguro. Todos os direitos reservados.</p>
   </footer>
 
   <!-- SCRIPT -->
   <script src="cart.js"></script>
-
 </body>
 </html>

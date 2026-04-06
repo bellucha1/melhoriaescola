@@ -1,16 +1,16 @@
 // Recupera o carrinho do localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-const cartContainer = document.querySelector('.cart-container');
-const cartTotalEl = document.getElementById('cart-total');
+const cartContainer = document.getElementById('cart-items');
+const totalValueEl = document.getElementById('total-value');
 
-// Função para atualizar o carrinho na tela
+// Função para exibir itens do carrinho
 function displayCart() {
   cartContainer.innerHTML = '';
 
   if (cart.length === 0) {
     cartContainer.innerHTML = '<p>Seu carrinho está vazio.</p>';
-    cartTotalEl.textContent = '0.00';
+    totalValueEl.textContent = '0.00';
     return;
   }
 
@@ -18,12 +18,12 @@ function displayCart() {
     const div = document.createElement('div');
     div.classList.add('cart-item');
     div.innerHTML = `
-      <p><strong>${item.name}</strong></p>
+      <p><strong>${item.product}</strong></p>
       <p>Preço: R$ ${item.price.toFixed(2)}</p>
       <p>
         Quantidade: 
         <button class="decrease" data-index="${index}">-</button>
-        ${item.quantity}
+        ${item.quantity || 1}
         <button class="increase" data-index="${index}">+</button>
       </p>
       <button class="remove" data-index="${index}">Remover</button>
@@ -36,13 +36,13 @@ function displayCart() {
   attachCartEvents();
 }
 
-// Atualiza o total
+// Atualiza o total do carrinho
 function updateTotal() {
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  cartTotalEl.textContent = total.toFixed(2);
+  const total = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+  totalValueEl.textContent = total.toFixed(2);
 }
 
-// Eventos de aumentar, diminuir e remover
+// Eventos para aumentar, diminuir ou remover
 function attachCartEvents() {
   const increaseBtns = document.querySelectorAll('.increase');
   const decreaseBtns = document.querySelectorAll('.decrease');
@@ -51,6 +51,7 @@ function attachCartEvents() {
   increaseBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const index = btn.dataset.index;
+      if (!cart[index].quantity) cart[index].quantity = 1;
       cart[index].quantity += 1;
       saveCart();
       displayCart();
@@ -60,6 +61,7 @@ function attachCartEvents() {
   decreaseBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const index = btn.dataset.index;
+      if (!cart[index].quantity) cart[index].quantity = 1;
       if (cart[index].quantity > 1) {
         cart[index].quantity -= 1;
       } else {
@@ -85,7 +87,7 @@ function saveCart() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Botão finalizar compra
+// Finalizar compra
 document.getElementById('checkout-button').addEventListener('click', () => {
   if (cart.length === 0) {
     alert("Seu carrinho está vazio!");
@@ -97,5 +99,5 @@ document.getElementById('checkout-button').addEventListener('click', () => {
   displayCart();
 });
 
-// Inicializa
+// Inicializa o carrinho
 displayCart();
